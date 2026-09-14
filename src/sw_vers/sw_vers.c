@@ -10,11 +10,11 @@
 static void
 usage(void)
 {
-	printf("usage: ldyd\n"
-		"  or:  ldyd --productName\n"
-		"  or:  ldyd --productVersion\n"
-		"  or:  ldyd --productVersionExtra\n"
-		"  or:  ldyd --buildVersion\n");
+	printf("usage: sw_vers\n"
+		"  or:  sw_vers --productName\n"
+		"  or:  sw_vers --productVersion\n"
+		"  or:  sw_vers --productVersionExtra\n"
+		"  or:  sw_vers --buildVersion\n");
 	exit(1);
 }
 
