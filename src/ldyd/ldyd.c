@@ -75,12 +75,12 @@ ldyd_main(const char *file, int mode)
 	}
 
 	if (access(buf, F_OK) != 0) {
-		fprintf(stderr, "%s: %s: No such file or directory\n", getprogname(), buf);
+		fprintf(stderr, "ldyd: %s: No such file or directory\n", buf);
 		return 1;
 	}
 
 	if (access(buf, X_OK) != 0) {
-		fprintf(stderr, "%s: warning: you do not have execution permission for '%s'\n", getprogname(), buf);
+		fprintf(stderr, "ldyd: warning: you do not have execution permission for '%s'\n", buf);
 		goto no_exec;
 	}
 
@@ -141,6 +141,6 @@ is_script(const char *file)
 static void
 usage(void)
 {
-	printf("usage: %s [-Gm] FILE...\n", getprogname());
+	printf("usage: ldyd [-Gm] FILE...\n");
 	exit(1);
 }

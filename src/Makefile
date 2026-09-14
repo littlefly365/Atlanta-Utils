@@ -1,3 +1,3 @@
-SUBDIR=	bsdvers ldyd sw_vers
+SUBDIR=	bsdvers ldyd sw_vers syspkg
 
 .include <bsd.subdir.mk>

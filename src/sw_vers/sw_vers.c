@@ -10,12 +10,11 @@
 static void
 usage(void)
 {
-	printf("usage: %s\n"
-		"  or:  %s --productName\n"
-		"  or:  %s --productVersion\n"
-		"  or:  %s --productVersionExtra\n"
-		"  or:  %s --buildVersion\n",
-		getprogname(), getprogname(), getprogname(), getprogname(), getprogname());
+	printf("usage: ldyd\n"
+		"  or:  ldyd --productName\n"
+		"  or:  ldyd --productVersion\n"
+		"  or:  ldyd --productVersionExtra\n"
+		"  or:  ldyd --buildVersion\n");
 	exit(1);
 }
 
@@ -28,12 +27,12 @@ FindInText(char *text, const char *key, char *buf, size_t buflen)
 	if (str)
 		str += strlen(key);
 	else {
-		*str = '\0';
+		*buf = '\0';
 		return;
 	}
 	for (; *str == ' ' || *str == ':'; str++);
 	while (*str != '\n' && buflen-- > 1) *buf++ = *str++;
-	*buf = 0;
+	*buf = '\0';
 }
 
 int
@@ -48,7 +47,6 @@ main(int argc, char *argv[])
 
 	if (argc > 2)
 		usage();
-
 	if ((fd = open(FILE_PATH, O_RDONLY)) < 0)
 		err(EXIT_FAILURE, "%s", FILE_PATH);
 	if (read(fd, file, sizeof(file)) < 0)
@@ -58,7 +56,6 @@ main(int argc, char *argv[])
 	FindInText(file, "ProductVersion", ProductVersion, sizeof(ProductVersion));
 	FindInText(file, "ProductVersionExtra", ProductVersionExtra, sizeof(ProductVersionExtra));
 	FindInText(file, "BuildVersion", BuildVersion, sizeof(BuildVersion));
-
 	close(fd);
 
 	if (argc == 2) {
