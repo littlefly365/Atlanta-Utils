@@ -122,6 +122,10 @@ executing_recipe()
 
 	cd .. && rm -rf "$pkgname-$pkgver"
 
+	if command -v slib-remove >/dev/null; then
+		slib-remove $LIBDIR
+	fi
+
 	# Create METADATA
 	mkdir -p "$SYSPKG/$pkgname"
 	printf "$pkgver" > "$SYSPKG/$pkgname/VERSION"
