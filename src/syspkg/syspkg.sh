@@ -76,6 +76,18 @@ post_install_step()
 
 executing_recipe()
 {
+	if [ -f "$SYSPKG/$pkgname/VERSION" ]; then
+		if [ "$(cat $SYSPKG/$pkgname/VERSION)" = "$pkgver" ]; then
+			printf "syspkg: up to date.\n"
+			return
+		fi
+
+		if [ "$(printf '%s\n' "$1" "$2" | sort -V | head -n1)" = "$2" ]; then
+			printf >&2 "syspkg: You cant install older version of packages from the base system.\n"
+			exit 1
+		fi
+	fi
+
 	file="$(basename $source)"
 	mkdir -p "$FETCHDIR" && cd "$FETCHDIR"
 
