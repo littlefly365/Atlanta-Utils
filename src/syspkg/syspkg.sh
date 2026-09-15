@@ -34,7 +34,9 @@ BINDIR=$PREFIX/bin
 SBINDIR=$PREFIX/sbin
 SYSCONFDIR=/etc
 
-def_gnu_args="--prefix=$PREFIX --libdir=$LIBDIR --bindir=$BINDIR --sbindir=$SBINDIR --sysconfdir=$SYSCONFDIR"
+ARCH="$(uname -m)"
+
+def_gnu_args="--prefix=$PREFIX --libdir=$LIBDIR --libexecdir=$LIBEXECDIR --bindir=$BINDIR --sbindir=$SBINDIR --sysconfdir=$SYSCONFDIR"
 
 usage()
 {
@@ -55,6 +57,16 @@ check_recipe()
 		printf >&2 "syspkg: The recipe for the package '$1' does not have the enough information.\n"
 		exit 1
 	fi
+
+	if [ "$HOST_ARCH" -ne "$arch" ] && [ "$arch" -ne "all" ]; then
+		printf >&2 "syspkg: This recipe is for '$arch' but your system architecture is '$HOST_ARCH'\n"
+		exit 1
+	fi
+}
+
+prepare_step()
+{
+	:
 }
 
 post_install_step()
@@ -72,6 +84,9 @@ executing_recipe()
 	fi
 
 	tar xf "$file" && cd "$pkgname-$pkgver"
+
+	# prepare step
+	prepare_step
 
 	# configure step
 	args=""
@@ -157,7 +172,7 @@ main()
 		esac
 	done
 
-	if [ $# == 0 ]; then
+	if [ $# -eq 0 ]; then
 		usage
 	fi
 
