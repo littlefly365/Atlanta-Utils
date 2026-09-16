@@ -155,11 +155,14 @@ executing_recipe()
 
 	# Create METADATA
 	mkdir -p "$SYSPKG/$pkgname"
+	printf "$pkgname" > "$SYSPKG/$pkgname/NAME"
 	printf "$pkgver" > "$SYSPKG/$pkgname/VERSION"
 	printf "$pkgrel" > "$SYSPKG/$pkgname/RELEASE"
 	printf "$pkgdesc" > "$SYSPKG/$pkgname/DESCRIPTION"
+	printf "$arch" > "$SYSPKG/$pkgname/ARCHITECTURE"
 	printf "$source" > "$SYSPKG/$pkgname/SOURCE"
 	printf "$license" > "$SYSPKG/$pkgname/LICENSE"
+	printf "littlefly365" > "$SYSPKG/$pkgname/MAINTAINER" # All recipes are made by me
 	printf "$(date)" > "$SYSPKG/$pkgname/LAST_UPDATE"
 
 	printf "syspkg: '$1 $pkgver' has been installed successfully\n"
